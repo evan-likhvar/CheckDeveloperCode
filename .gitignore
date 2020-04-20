@@ -1,0 +1,5 @@
+.idea
+*.iml
+target
+vendor
+.phpunit.result.cache

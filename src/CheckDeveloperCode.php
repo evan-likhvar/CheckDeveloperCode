@@ -9,14 +9,15 @@ use PHPUnit\Framework\TestCase;
 class CheckDeveloperCode extends TestCase
 {
     //private $rules = []; //['single'=>'/^[a-z][a-z0-9_]+[^s]$/','nextName'=>'nextRule']
+    /** @var CodeValidatorInterface */
     private $validator;
     private $errors = [];
 
-    public function validate(string $dir, array $rules, TestTypeValidatorInterface $validator): string
+    public function validate(string $directoryPath, array $rules, CodeValidatorInterface $validator): string
     {
         $this->validator = $validator;
 
-        $testFiles = $this->getTestFiles($dir);
+        $testFiles = $this->getFiles($directoryPath);
 
         foreach ($testFiles as $filePath) {
             foreach ($rules as $ruleName => $rule) {
@@ -29,9 +30,9 @@ class CheckDeveloperCode extends TestCase
         return implode(PHP_EOL, $this->errors);
     }
 
-    private function getTestFiles($dir): array
+    private function getFiles($directoryPath): array
     {
-        return $this->validator->getTestFiles($dir);
+        return $this->validator->getFiles($directoryPath);
     }
 
     private function getMessage(string $filePath, string $ruleName): string

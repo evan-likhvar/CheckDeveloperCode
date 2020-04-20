@@ -12,11 +12,11 @@
 namespace Elikh;
 
 
-interface TestTypeValidatorInterface
+interface CodeValidatorInterface
 {
     public function isValid(string $filePath, string $testClass);
 
-    public function getTestFiles(string $testRoot): array;
+    public function getFiles(string $directoryPath): array;
 
     public function getMessage(string $filePath, string $ruleName): string;
 }

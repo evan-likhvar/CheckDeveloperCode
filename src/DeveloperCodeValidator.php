@@ -13,7 +13,7 @@ namespace Elikh;
 
 use PHPUnit\Framework\TestCase;
 
-class DeveloperCodeValidator implements TestTypeValidatorInterface
+class DeveloperCodeValidator implements CodeValidatorInterface
 {
 
     public function isValid(string $filePath, string $rule)
@@ -21,10 +21,9 @@ class DeveloperCodeValidator implements TestTypeValidatorInterface
         return preg_match($rule, file_get_contents($filePath)) ? true : false;
     }
 
-    public function getTestFiles(string $testRoot): array
+    public function getFiles(string $directoryPath): array
     {
-        $path = $testRoot . DIRECTORY_SEPARATOR . 'Unit';
-        return array_diff(glob($path . DIRECTORY_SEPARATOR . '*'), ['..', '.']);
+        return array_diff(glob($directoryPath . DIRECTORY_SEPARATOR . '*'), ['..', '.']);
     }
 
     public function getMessage(string $filePath, string $ruleName): string

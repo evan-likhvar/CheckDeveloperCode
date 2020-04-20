@@ -23,7 +23,16 @@ class DeveloperCodeValidator implements CodeValidatorInterface
 
     public function getFiles(string $directoryPath): array
     {
-        return array_diff(glob($directoryPath . DIRECTORY_SEPARATOR . '*'), ['..', '.']);
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directoryPath));
+
+        $files = [];
+        foreach ($iterator as $file) {
+            if (!$file->isDir()) {
+                $files[] = $file->getPathname();
+            }
+        }
+
+        return $files;
     }
 
     public function getMessage(string $filePath, string $ruleName): string
